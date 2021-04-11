@@ -26,23 +26,23 @@
 <meta name="description" content="类加载运行全过程当使用java命令运行某个类的main函数时，首先需哟啊通过类加载器把类加载到JVM中 12345678910111213141516171819package com.fanq.jvm;import com.fanq.entity.User;public class Math &amp;#123;    public static final int initData &#x3D; 666;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java类加载器">
-<meta property="og:url" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:url" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/index.html">
 <meta property="og:site_name" content="fanq">
 <meta property="og:description" content="类加载运行全过程当使用java命令运行某个类的main函数时，首先需哟啊通过类加载器把类加载到JVM中 12345678910111213141516171819package com.fanq.jvm;import com.fanq.entity.User;public class Math &amp;#123;    public static final int initData &#x3D; 666;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/image-20210411133245285.png">
-<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/clipboard-1618120939613.png">
-<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/clipboard-1618123296065.png">
-<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/hotspot%E6%BA%90%E7%A0%81jvm%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B.jpg">
+<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/image-20210411133245285.png">
+<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/clipboard-1618120939613.png">
+<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/clipboard-1618123296065.png">
+<meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/hotspot%E6%BA%90%E7%A0%81jvm%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B.jpg">
 <meta property="article:published_time" content="2021-03-20T09:37:35.503Z">
 <meta property="article:modified_time" content="2021-04-11T08:03:04.153Z">
 <meta property="article:author" content="fanq">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/image-20210411133245285.png">
+<meta name="twitter:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/image-20210411133245285.png">
 
 
-<link rel="canonical" href="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/">
+<link rel="canonical" href="https://fanq1213.github.io/2021/03/20/JavaClassLoader/">
 
 
 <script class="page-configurations">
@@ -264,7 +264,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fanq1213.github.io/2021/03/20/Java%E5%AF%B9%E8%B1%A1/">
+    <link itemprop="mainEntityOfPage" href="https://fanq1213.github.io/2021/03/20/JavaClassLoader/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/image.gif">
@@ -334,7 +334,7 @@
         <h1 id="类加载运行全过程"><a href="#类加载运行全过程" class="headerlink" title="类加载运行全过程"></a>类加载运行全过程</h1><p>当使用java命令运行某个类的main函数时，首先需哟啊通过<strong>类加载器</strong>把类加载到<strong>JVM</strong>中</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.fanq.jvm;</span><br><span class="line"><span class="keyword">import</span> com.fanq.entity.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Math</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> initData = <span class="number">666</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> User user = <span class="keyword">new</span> User();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compute</span><span class="params">()</span> </span>&#123;  <span class="comment">//一个方法对应一块栈帧内存区域</span></span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> c = (a + b) * <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Math math = <span class="keyword">new</span> Math();</span><br><span class="line">        math.compute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="通过java执行大体流程如下图"><a href="#通过java执行大体流程如下图" class="headerlink" title="通过java执行大体流程如下图"></a>通过java执行大体流程如下图</h2><p><img src="/2021/03/20/Java%E5%AF%B9%E8%B1%A1/image-20210411133245285.png" alt="image-20210411133245285"></p>
+<h2 id="通过java执行大体流程如下图"><a href="#通过java执行大体流程如下图" class="headerlink" title="通过java执行大体流程如下图"></a>通过java执行大体流程如下图</h2><p><img src="/2021/03/20/JavaClassLoader/image-20210411133245285.png" alt="image-20210411133245285"></p>
 <h2 id="loadClass的类加载过程"><a href="#loadClass的类加载过程" class="headerlink" title="loadClass的类加载过程"></a>loadClass的类加载过程</h2><p> <strong>加载 –&gt;&gt;验证 -&gt;&gt; 准备  -&gt;&gt;解析  -&gt;&gt;初始化 -&gt;&gt;使用-&gt;&gt; 卸载</strong></p>
 <ul>
 <li>加载：在硬盘上通过IO读入字节码文件，使用类时才会加载类。例如在调用类的main函数，new对象等等。在加载阶段会在内存中生成一个Class对象，作为方法区这个类的各种数据的访问入口(对于程序员来操作类，通过反射)</li>
@@ -343,7 +343,7 @@
 <li>解析：将符号引用替换为直接引用，该阶段会把一些静态方法(也就是符号引用，例如main方法替换为指向数据所存内存的指针或者句柄等[直接引用]，这就是所谓的静态链接过程[类加载期间完成]。动态链接实在程序运行期间完成的，是将符号引用替换为直接引用)</li>
 <li>初始化：对类的静态变量初始化为指定的值，执行静态代码块</li>
 </ul>
-<p><img src="/2021/03/20/Java%E5%AF%B9%E8%B1%A1/clipboard-1618120939613.png" alt="img"></p>
+<p><img src="/2021/03/20/JavaClassLoader/clipboard-1618120939613.png" alt="img"></p>
 <p>类被加载到方法区后主要包含 <strong>运行时常量池、类型信息、字段信息、方法信息、类加载器的引用、对应class实例的引用</strong>等信息。</p>
 <p><strong>类加载器的引用</strong>：这个类的类加载器实例的引用</p>
 <p><strong>对应class实例的引用</strong>：类加载器在加载类信息放到方法区后，会创建一个对应类的Class类型的对象实例放到堆中，为了开发人员可以访问方法区中类的信息</p>
@@ -368,7 +368,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Launcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       Launcher.ExtClassLoader var1;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//构造扩展类加载器。在构造得过程中将其父类加载器属性设置为null</span></span><br><span class="line">           var1 = Launcher.ExtClassLoader.getExtClassLoader();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException var10) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(<span class="string">&quot;Could not create extension class loader&quot;</span>, var10);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//构造应用类加载器。在构造的过程中将其父类加载器属性设置为ExtClassLoader</span></span><br><span class="line">           <span class="comment">//Launcher的loader属性值是AppClassLoader，我们都是使用这个类加载器来加载我们自己下的类</span></span><br><span class="line">           <span class="keyword">this</span>.loader = Launcher.AppClassLoader.getAppClassLoader(var1);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException var9) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(<span class="string">&quot;Could not create application class loader&quot;</span>, var9);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       Thread.currentThread().setContextClassLoader(<span class="keyword">this</span>.loader);</span><br><span class="line">       String var2 = System.getProperty(<span class="string">&quot;java.security.manager&quot;</span>);</span><br><span class="line">       。。。。。。。其他代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>JVM类加载器是有父子层级结构关系的，如下图</p>
-<p><img src="/2021/03/20/Java%E5%AF%B9%E8%B1%A1/clipboard-1618123296065.png" alt="img"></p>
+<p><img src="/2021/03/20/JavaClassLoader/clipboard-1618123296065.png" alt="img"></p>
 <p>类的加载其实就是一个双亲委派机制，加载某个类的时候会先请求父类加载器去寻找加载目标，找不到在继续委托上层父类加载器加载，如果父类加载器在自己加载的路径下找到目标类，就加载目标类，反之如果所有的父类加载器都在自己加载的路径下找不到目标类，那么就会向下退回加载请求，那么扩展类加载器就会自己加载，如果扩展类加载器找不到就会继续回退到应用类加载器加载。。。</p>
 <p><font size="3" color="red">通俗的说就是</font></p>
 <blockquote>
@@ -405,7 +405,7 @@
 
 
 <p><strong>补充：Hotspot源码JVM启动执行main方法流程</strong></p>
-<p><img src="/2021/03/20/Java%E5%AF%B9%E8%B1%A1/hotspot%E6%BA%90%E7%A0%81jvm%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B.jpg" alt="img"></p>
+<p><img src="/2021/03/20/JavaClassLoader/hotspot%E6%BA%90%E7%A0%81jvm%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B.jpg" alt="img"></p>
 <p>以上所有资料来源于网络，如有侵权，请联系qq550971170删除。</p>
 <p>文章中的JDK是1.8版本，如有错误欢迎大家指正，如转载请注明出处！！！</p>
 
