@@ -21,7 +21,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"fanq1213.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"fanq1213.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="类加载运行全过程当使用java命令运行某个类的main函数时，首先需要通过类加载器把类加载到JVM中 12345678910111213141516171819package com.fanq.jvm;import com.fanq.entity.User;public class Math &amp;#123;    public static final int initData &#x3D; 666;">
 <meta property="og:type" content="article">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/clipboard-1618123296065.png">
 <meta property="og:image" content="https://fanq1213.github.io/2021/03/20/JavaClassLoader/hotspot%E6%BA%90%E7%A0%81jvm%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%B5%81%E7%A8%8B.jpg">
 <meta property="article:published_time" content="2021-03-20T09:37:35.503Z">
-<meta property="article:modified_time" content="2021-04-11T08:34:51.670Z">
+<meta property="article:modified_time" content="2021-04-17T06:48:26.396Z">
 <meta property="article:author" content="fanq">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-11 16:34:51" itemprop="dateModified" datetime="2021-04-11T16:34:51+08:00">2021-04-11</time>
+        <time title="修改时间：2021-04-17 14:48:26" itemprop="dateModified" datetime="2021-04-17T14:48:26+08:00">2021-04-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -432,7 +432,6 @@
 
 
     <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC81MzIyMC8yOTY5NQ"></div>
-
 <script>
   window.addEventListener('tabs:register', () => {
     let { activeClass } = CONFIG.comments;
@@ -453,6 +452,7 @@
       localStorage.setItem('comments_active', commentClass);
     });
   }
+
 </script>
 </div>
   </main>
